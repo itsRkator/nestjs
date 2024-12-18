@@ -18,10 +18,10 @@
   },
   "homepage": "https://github.com/itsRkator/nestjs#readme",
   "dependencies": {
-    "@nestjs/common": "^7.6.17",
-    "@nestjs/core": "^7.6.17",
-    "@nestjs/platform-express": "^7.6.17",
-    "reflect-metadata": "^0.1.13",
-    "typescript": "^4.3.2"
+    "@nestjs/common": "^10.4.15",
+    "@nestjs/core": "^10.4.15",
+    "@nestjs/platform-express": "^10.4.15",
+    "reflect-metadata": "^0.2.2",
+    "typescript": "^5.7.2"
   }
 }
