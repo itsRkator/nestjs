@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -17,11 +18,7 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const { name, email, phone, password, confirmPassword } = createUserDto;
-
-    if (password !== confirmPassword) {
-      throw new BadRequestException('Passwords do not match');
-    }
+    const { name, email, phone, password } = createUserDto;
 
     const user = this.userRepository.create({ name, email, password, phone });
     await this.userRepository.save(user);
@@ -33,17 +30,17 @@ export class UsersService {
   }
 
   async find(email: string) {
-    const user = await this.userRepository.findOneBy({ email });
-
-    if (!user) {
-      throw new NotFoundException('User not found!');
-    }
+    const user = await this.userRepository.find({ where: { email } });
 
     return user;
   }
 
   async findOne(id: number) {
+    if (!id) {
+      throw new ForbiddenException('You need to login first.');
+    }
     const user = await this.userRepository.findOneBy({ id });
+    console.log(id);
 
     if (!user) {
       throw new NotFoundException('User not found!');

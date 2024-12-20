@@ -7,11 +7,12 @@ import {
 import { plainToInstance } from 'class-transformer';
 import { map, Observable } from 'rxjs';
 
-// type ClassConstructor = new (...args: any[]) => object; // Alternate and concise for the below interface
+type ClassConstructor = new (...args: any[]) => object;
 
-interface ClassConstructor {
-  new (...args: any[]): object;
-}
+// Alternate and concise for the above type
+// interface ClassConstructor {
+//   new (...args: any[]): object;
+// }
 
 export const Serialize = (inputDto: ClassConstructor) => {
   return UseInterceptors(new SerializeInterceptor(inputDto));

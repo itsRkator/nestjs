@@ -17,7 +17,6 @@ export class MessagesController {
 
   @Post()
   createMessage(@Body() createMessageDto: CreateMessageDto) {
-    console.log(createMessageDto);
     return this.messagesService.create(createMessageDto);
   }
 

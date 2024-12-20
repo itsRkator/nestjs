@@ -3,7 +3,6 @@ import {
   IsNotEmpty,
   IsString,
   Matches,
-  MaxLength,
   MinLength,
 } from 'class-validator';
 
@@ -26,22 +25,6 @@ export class CreateUserDto {
   phone: string;
 
   @IsNotEmpty()
-  @MinLength(6)
-  @MaxLength(32)
   @IsString()
-  @Matches(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{6,32}$/, {
-    message:
-      'Password must contain at least one letter, one number, and one special character.',
-  })
   password: string;
-
-  @IsNotEmpty()
-  @MinLength(6)
-  @MaxLength(32)
-  @IsString()
-  @Matches(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{6,32}$/, {
-    message:
-      'Password must contain at least one letter, one number, and one special character.',
-  })
-  confirmPassword: string;
 }
