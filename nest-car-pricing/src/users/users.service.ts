@@ -40,7 +40,6 @@ export class UsersService {
       throw new ForbiddenException('You need to login first.');
     }
     const user = await this.userRepository.findOneBy({ id });
-    console.log(id);
 
     if (!user) {
       throw new NotFoundException('User not found!');

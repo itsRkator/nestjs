@@ -13,7 +13,7 @@ import { Serialize } from '../interceptors/serialize.interceptor';
 import { UserInfoDto } from '../users/dto/user-info.dto';
 import { User } from '../users/entities/user.entity';
 import { CurrentUser } from './decorators/current-user.decorators';
-import { AuthGuard } from 'src/guards/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 
 @Serialize(UserInfoDto)
 @Controller('auth')

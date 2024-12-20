@@ -9,7 +9,7 @@ import { UsersService } from '../users/users.service';
 import { randomBytes, scrypt } from 'crypto';
 import { promisify } from 'util';
 
-const promisifiedScript = promisify(scrypt);
+const promisifiedScrypt = promisify(scrypt);
 
 @Injectable()
 export class AuthService {
@@ -32,7 +32,7 @@ export class AuthService {
     }
 
     const salt = randomBytes(12).toString('hex');
-    const hashedPasswords = (await promisifiedScript(
+    const hashedPasswords = (await promisifiedScrypt(
       password,
       salt,
       32,
@@ -57,7 +57,7 @@ export class AuthService {
     }
 
     const [salt, storedHashedPassword] = user.password.split('.');
-    const hashedPassword = (await promisifiedScript(
+    const hashedPassword = (await promisifiedScrypt(
       password,
       salt,
       32,
