@@ -26,6 +26,9 @@ export class User {
   @Column({ type: 'varchar', nullable: false })
   password: string;
 
+  @Column({ type: 'boolean', default: true })
+  admin: boolean;
+
   @OneToMany(() => Report, (report) => report.user)
   reports: Report[];
 

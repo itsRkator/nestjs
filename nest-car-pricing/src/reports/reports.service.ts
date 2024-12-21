@@ -5,6 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Report } from './entities/report.entity';
 import { User } from '../users/entities/user.entity';
+import { ApproveReportDto } from './dto/approve-report.dot';
+import { GetEstimateDto } from './dto/get-estimate.dto';
 
 @Injectable()
 export class ReportsService {
@@ -35,12 +37,33 @@ export class ReportsService {
     return report;
   }
 
+  createEstimate(getEstimateDto: GetEstimateDto) {
+    const { make, model, year, mileage, lat, lng } = getEstimateDto;
+
+    return this.reportRepository
+      .createQueryBuilder()
+      .select('AVG(price)')
+      .where('make = :make', { make })
+      .andWhere('model = :model', { model })
+      .andWhere('year - :year BETWEEN -3 AND 3', { year })
+      .andWhere('lat - :lat BETWEEN -5 AND 5', { lat })
+      .andWhere('lng - :lng BETWEEN -5 AND 5', { lng })
+      .orderBy('ABS(mileage - :mileage)', 'DESC')
+      .andWhere('approved IS TRUE')
+      .setParameters({ mileage })
+      .limit(3)
+      .getRawOne();
+  }
+
   findAll() {
-    return this.reportRepository.find();
+    return this.reportRepository.find({ relations: ['user'] });
   }
 
   async findOne(id: number) {
-    const report = await this.reportRepository.findOne({ where: { id } });
+    const report = await this.reportRepository.findOne({
+      where: { id },
+      relations: ['user'],
+    });
 
     if (!report) {
       throw new NotFoundException('Report not found');
@@ -51,6 +74,23 @@ export class ReportsService {
 
   update(id: number, updateReportDto: UpdateReportDto) {
     return `This action updates a #${id}, data to be updated are ${JSON.stringify(updateReportDto)} report`;
+  }
+
+  async updateApproval(id: number, approveReportDto: ApproveReportDto) {
+    const { approved } = approveReportDto;
+    const report = await this.reportRepository.findOne({
+      where: { id },
+      relations: ['user'],
+    });
+
+    if (!report) {
+      throw new NotFoundException('Report not found');
+    }
+
+    report.approved = approved;
+    await this.reportRepository.save(report);
+
+    return report;
   }
 
   remove(id: number) {
