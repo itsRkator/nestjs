@@ -15,7 +15,7 @@ const promisifiedScrypt = promisify(scrypt);
 export class AuthService {
   constructor(private readonly usersService: UsersService) {}
 
-  // identify(userId: number) {
+  // currentUser(userId: number) {
   //   return this.usersService.findOne(userId);
   // }
 

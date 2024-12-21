@@ -21,13 +21,13 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   // @Get('identify')
-  // identify(@Session() session: any) {
-  //   return this.authService.identify(session.userId);
+  // currentUser(@Session() session: any) {
+  //   return this.authService.currentUser(session.userId);
   // }
 
-  @Get('identify')
+  @Get('current-user')
   @UseGuards(AuthGuard)
-  identify(@CurrentUser() user: User) {
+  currentUser(@CurrentUser() user: User) {
     return user;
   }
 
