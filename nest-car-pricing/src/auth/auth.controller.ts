@@ -10,12 +10,12 @@ import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup-auth.dto';
 import { SigninDto } from './dto/signin-auth.dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
-import { UserInfoDto } from '../users/dto/user-info.dto';
+import { UserResponseDto } from '../users/dto/user-response.dto';
 import { User } from '../users/entities/user.entity';
 import { CurrentUser } from './decorators/current-user.decorators';
 import { AuthGuard } from '../guards/auth.guard';
 
-@Serialize(UserInfoDto)
+@Serialize(UserResponseDto)
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

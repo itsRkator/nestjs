@@ -10,10 +10,10 @@ import {
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Serialize } from '../interceptors/serialize.interceptor';
-import { UserInfoDto } from './dto/user-info.dto';
+import { UserResponseDto } from './dto/user-response.dto';
 
 @Controller('users')
-@Serialize(UserInfoDto)
+@Serialize(UserResponseDto)
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

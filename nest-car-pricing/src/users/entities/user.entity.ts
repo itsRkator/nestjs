@@ -4,8 +4,10 @@ import {
   AfterUpdate,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Report } from '../../reports/entities/report.entity';
 
 @Entity()
 export class User {
@@ -24,6 +26,10 @@ export class User {
   @Column({ type: 'varchar', nullable: false })
   password: string;
 
+  @OneToMany(() => Report, (report) => report.user)
+  reports: Report[];
+
+  // Hooks
   @AfterInsert()
   logInsert() {
     console.log(`Created user with id ${this.id}`);
